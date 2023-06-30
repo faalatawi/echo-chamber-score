@@ -1,2 +1,4 @@
 poetry.lock
 data/
+delete_me.ipynb
+*.pyc

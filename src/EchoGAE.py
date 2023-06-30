@@ -14,7 +14,7 @@ from pandas import DataFrame
 from networkx import Graph
 
 
-from .GAE import run as GAE_run
+from .GAE import run
 
 
 def read_data(
@@ -104,7 +104,6 @@ def preprocess(
 
 def EchoGAE_algorithm(
     G,
-    algorithm: str = "GAE",
     user_embeddings=None,
     show_progress=True,
     epochs=300,
@@ -131,14 +130,7 @@ def EchoGAE_algorithm(
     data = Data(x=X, edge_index=edge_list)
     data = train_test_split_edges(data)
 
-    # Train
-    if algorithm == "GAE":
-        run = GAE_run
-    elif algorithm == "VGAE":
-        run = VGAE_run  # FIXME: add hidden_channels
-    else:
-        raise ValueError(f"Unknown algorithm {algorithm}")
-
+    # Run the model
     model, x, train_pos_edge_index = run(
         data,
         show_progress=show_progress,
