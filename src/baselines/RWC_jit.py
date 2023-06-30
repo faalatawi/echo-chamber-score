@@ -5,6 +5,7 @@ import numba
 import networkx as nx
 import numpy as np
 
+
 @numba.jit
 def get_random_sub_list(items: np.ndarray, k: int) -> list:
     """
@@ -12,8 +13,11 @@ def get_random_sub_list(items: np.ndarray, k: int) -> list:
     """
     return list(np.random.choice(items, k, replace=False))
 
+
 @numba.jit
-def perform_random_walk(adj_matrix: np.ndarray, starting_node, same_side_nodes, other_side_nodes):
+def perform_random_walk(
+    adj_matrix: np.ndarray, starting_node, same_side_nodes, other_side_nodes
+):
     """
     Perform a random walk that start from a given `starting_node` and ends when it reaches a node from `same_side_nodes` or `other_side_nodes`.
     Note that both `same_side_nodes` and `other_side_nodes` are lists of nodes. and they are a subset of nodes in each perspective side.
@@ -48,12 +52,13 @@ def perform_random_walk(adj_matrix: np.ndarray, starting_node, same_side_nodes, 
 
 
 @numba.jit
-def count_walks(adj_matrix: np.ndarray, starting_side_nodes: list, ending_side_nodes: list):
+def count_walks(
+    adj_matrix: np.ndarray, starting_side_nodes: list, ending_side_nodes: list
+):
     count_walk_end_in_same_side = 0
     count_walk_end_in_other_side = 0
 
     for i in range(len(starting_side_nodes) - 1):
-
         node = starting_side_nodes[i]
 
         other_nodes = starting_side_nodes[:i] + starting_side_nodes[i + 1 :]
@@ -72,7 +77,11 @@ def count_walks(adj_matrix: np.ndarray, starting_side_nodes: list, ending_side_n
 
 @numba.jit
 def RWC_JIT(
-    adj_matrix: np.ndarray, left_nodes: np.ndarray, right_nodes: np.ndarray, itr_num : int=1000, percent: float = 0.1,
+    adj_matrix: np.ndarray,
+    left_nodes: np.ndarray,
+    right_nodes: np.ndarray,
+    itr_num: int = 1000,
+    percent: float = 0.1,
 ) -> float:
     """
     Random Walk Controversy Metric
@@ -98,17 +107,20 @@ def RWC_JIT(
     right_percent = int(percent * len(right_nodes))
 
     for _ in range(itr_num):
-
         user_nodes_left = get_random_sub_list(left_nodes, left_percent)
         user_nodes_right = get_random_sub_list(right_nodes, right_percent)
 
         # Staring from the left
-        end_in_left, end_in_right = count_walks(adj_matrix, user_nodes_left, user_nodes_right)
+        end_in_left, end_in_right = count_walks(
+            adj_matrix, user_nodes_left, user_nodes_right
+        )
         left_left += end_in_left  # Count the walks that sated in left and ended in left
         left_right += end_in_right
 
         # Staring from the right
-        end_in_right, end_in_left = count_walks(adj_matrix, user_nodes_right, user_nodes_left)
+        end_in_right, end_in_left = count_walks(
+            adj_matrix, user_nodes_right, user_nodes_left
+        )
         right_right += end_in_right
         right_left += end_in_left
 
@@ -120,10 +132,11 @@ def RWC_JIT(
     return e1 * e4 - e2 * e3
 
 
-def RWC(G: nx.Graph, left_nodes: list, right_nodes: list, itr_num=1000, percent: float = 0.1):
-
+def RWC(
+    G: nx.Graph, left_nodes: list, right_nodes: list, itr_num=1000, percent: float = 0.1
+):
     # Get the adjacency matrix
-    adj_matrix = nx.to_numpy_matrix(G)
+    adj_matrix = nx.to_numpy_array(G)
     left_nodes = np.array(left_nodes)
     right_nodes = np.array(right_nodes)
 
