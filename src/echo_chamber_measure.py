@@ -15,7 +15,6 @@ class EchoChamberMeasure:
             self.distances = cosine_distances(users_representations)
         self.labels = labels
 
-    # `a` part of the metric
     def cohesion_node(self, idx: int) -> float:
         node_label = self.labels[idx]
 
@@ -23,7 +22,6 @@ class EchoChamberMeasure:
 
         return np.mean(node_distances)
 
-    # `b` part of the metric
     def separation_node(self, idx: int) -> float:
         node_label = self.labels[idx]
 
@@ -47,15 +45,6 @@ class EchoChamberMeasure:
             nodes_metric.append(self.metric(i))
         return np.mean(nodes_metric)
 
-    def community_cohesion(self, community_label: int) -> float:
-        com_coh = []
-
-        for i in range(self.distances.shape[0]):
-            if self.labels[i] == community_label:
-                com_coh.append(self.cohesion_node(i))
-
-        return np.mean(com_coh)
-
     def community_echo_chamber_index(self, community_label: int) -> float:
         com_eci = []
 
@@ -64,11 +53,3 @@ class EchoChamberMeasure:
                 com_eci.append(self.metric(i))
 
         return np.mean(com_eci)
-
-    def network_separation(self) -> float:
-        net_sep = []
-
-        for i in range(self.distances.shape[0]):
-            net_sep.append(self.separation_node(i))
-
-        return np.mean(net_sep)

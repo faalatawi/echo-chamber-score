@@ -1,0 +1,11 @@
+networkx
+pandas
+sentence-transformers
+torch
+torch-geometric
+scikit-learn
+nltk
+emoji
+pyarrow
+numpy
+seaborn

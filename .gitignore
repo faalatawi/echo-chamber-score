@@ -2,3 +2,4 @@ poetry.lock
 delete_me.ipynb
 *.pyc
 .DS_Store
+embeddings.feather
