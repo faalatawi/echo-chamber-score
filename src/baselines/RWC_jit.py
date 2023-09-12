@@ -1,7 +1,4 @@
 import numba
-
-# My Implementation of the RWC metric
-
 import networkx as nx
 import numpy as np
 

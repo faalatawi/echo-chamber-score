@@ -6,6 +6,32 @@ ECS (Echo Chamber Score) is a method to measure the echo chamber and polarizatio
 # Paper Abstract
 The rise of social media platforms has facilitated the formation of echo chambers, which are online spaces where users predominantly encounter viewpoints that reinforce their existing beliefs while excluding dissenting perspectives. This phenomenon significantly hinders information dissemination across communities and fuels societal polarization. Therefore, it is crucial to develop methods for quantifying echo chambers. In this paper, we present the Echo Chamber Score (ECS), a novel metric that assesses the cohesion and separation of user communities by measuring distances between users in the embedding space. In contrast to existing approaches, ECS is able to function without labels for user ideologies and makes no assumptions about the structure of the interaction graph. To facilitate measuring distances between users, we propose EchoGAE, a self-supervised graph autoencoder-based user embedding model that leverages users' posts and the interaction graph to embed them in a manner that reflects their ideological similarity. To assess the effectiveness of ECS, we use a Twitter dataset consisting of four topics - two polarizing and two non-polarizing. Our results showcase ECS's effectiveness as a tool for quantifying echo chambers and shedding light on the dynamics of online discourse.
 
+# How to run?
+
+First you need to use [conda](https://docs.conda.io/en/latest/) to create a new environment and install the required packages. Run:
+```bash
+conda env create -f environment.yml
+```
+
+Then, activate the environment:
+```bash
+conda activate ecs
+```
+
+Then look into `expt_1_echo_chamber_score.ipynb` and `expt_2_ideology_detection.ipynb` for the experiments. And to learn how to use the echo chamber score.
+
+## Required packages
+- python 3.10
+- torch
+- sentence-transformers
+- networkx
+- numpy
+- pandas
+- scikit-learn
+- nltk
+- numba (recommended for fast computation)
+- matplotlib (for plotting)
+- seaborn (for plotting)
 
 
 # Cite

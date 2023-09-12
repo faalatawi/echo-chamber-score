@@ -1,3 +1,6 @@
+# This code is based on Kiran Garimella (https://github.com/gvrkiran/controversy-detection) implementation
+# I update it to work with newer versions of python
+
 import networkx as nx
 from networkx import Graph
 import numpy as np
